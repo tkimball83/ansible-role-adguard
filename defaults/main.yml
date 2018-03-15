@@ -1,0 +1,5 @@
+---
+adguard_pkg: Adguard
+adguard_domain: "com.adguard.{{ adguard_pkg }}"
+adguard_defaults: {}
+...

@@ -1,0 +1,25 @@
+---
+- name: Ensure that the {{ adguard_pkg }} package is installed
+  tags: adguard
+  homebrew_cask:
+    name: "{{ adguard_pkg|lower }}"
+    state: present
+  register: adguard_homebrew_cask
+  when: adguard_pkg is defined
+
+- name: Applying {{ adguard_pkg }} configurations
+  tags: adguard
+  osx_defaults:
+    domain: "{{ adguard_domain }}"
+    key: "{{ item.key|regex_replace('_', ' ') }}"
+    state: "{{ item.value.state|default('present') }}"
+    type: "{{ item.value.type }}"
+    value: "{{ item.value.value }}"
+  with_dict: "{{ adguard_defaults }}"
+  when:
+    - adguard_domain is defined
+    - adguard_homebrew_cask|success
+    - item.key is defined
+    - item.value.type is defined
+    - item.value.value is defined
+...
