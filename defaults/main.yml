@@ -1,5 +1,5 @@
 ---
-adguard_pkg: Adguard
-adguard_domain: "com.adguard.{{ adguard_pkg }}"
 adguard_defaults: {}
+adguard_domain: "com.adguard.{{ adguard_package }}"
+adguard_package: Adguard
 ...

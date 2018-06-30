@@ -1,13 +1,12 @@
 ---
-- name: Ensure that the {{ adguard_pkg }} package is installed
+- name: Ensure that the {{ adguard_package }} package is installed
   tags: adguard
   homebrew_cask:
-    name: "{{ adguard_pkg|lower }}"
+    name: "{{ adguard_package|lower }}"
     state: present
   register: adguard_homebrew_cask
-  when: adguard_pkg is defined
 
-- name: Applying {{ adguard_pkg }} configurations
+- name: Attempting to apply {{ adguard_package }} configurations
   tags: adguard
   osx_defaults:
     domain: "{{ adguard_domain }}"
@@ -17,9 +16,9 @@
     value: "{{ item.value.value }}"
   with_dict: "{{ adguard_defaults }}"
   when:
-    - adguard_domain is defined
-    - adguard_homebrew_cask|success
     - item.key is defined
     - item.value.type is defined
     - item.value.value is defined
+    - adguard_defaults|length > 0
+    - adguard_homebrew_cask is success
 ...
