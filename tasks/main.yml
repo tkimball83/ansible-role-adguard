@@ -4,21 +4,23 @@
   homebrew_cask:
     name: "{{ adguard_package|lower }}"
     state: present
-  register: adguard_homebrew_cask
+  when: adguard_package|length > 0
 
 - name: Attempting to apply {{ adguard_package }} configurations
   tags: adguard
   osx_defaults:
     domain: "{{ adguard_domain }}"
-    key: "{{ item.key|regex_replace('_', ' ') }}"
-    state: "{{ item.value.state|default('present') }}"
-    type: "{{ item.value.type }}"
-    value: "{{ item.value.value }}"
-  with_dict: "{{ adguard_defaults }}"
+    key: "{{ item.name }}"
+    state: "{{ item.state|default('present') }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+  loop: "{{ adguard_defaults }}"
+  loop_control:
+    label: "{{ item.name }}"
   when:
-    - item.key is defined
-    - item.value.type is defined
-    - item.value.value is defined
+    - item.name is defined
+    - item.type is defined
+    - item.value is defined
     - adguard_defaults|length > 0
-    - adguard_homebrew_cask is success
+    - adguard_domain is defined
 ...

@@ -14,7 +14,7 @@ This role requires homebrew and homebrew cask to be installed
 
 Available variables are listed below, along with default values:
 
-    adguard_defaults: {}
+    adguard_defaults: []
     adguard_domain: "com.adguard.{{ adguard_package }}"
     adguard_package: Adguard
 
@@ -29,31 +29,31 @@ None
       roles:
         - role: tkimball83.adguard
           adguard_defaults:
-            FilteringEnabled:
+            - name: FilteringEnabled
               type: bool
               value: true
-            FirstRun:
+            - name: FirstRun
               type: bool
               value: false
-            KextAllowed:
+            - name: KextAllowed
               type: bool
               value: true
-            PopupBlockerEnabled:
+            - name: PopupBlockerEnabled
               type: bool
               value: true
-            PrivacyProtectionEnabled:
+            - name: PrivacyProtectionEnabled
               type: bool
               value: true
-            SUHasLaunchedBefore:
+            - name: SUHasLaunchedBefore
               type: bool
               value: true
-            SafebrowsingEnabled:
+            - name: SafebrowsingEnabled
               type: bool
               value: true
-            StartAtLogin:
+            - name: StartAtLogin
               type: bool
               value: true
-            WebOfTrustEnabled:
+            - name: WebOfTrustEnabled
               type: bool
               value: true
 
